@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<title>regex test</title>
+<style>
+.leftdiv {
+  margin: 20px;
+  width: 40%;
+  float: left;
+}
+.inputdiv, .outputdiv, .historydiv {
+  margin: 60px 20px;
+  padding: 20px;
+  border: 1px solid #EFEFEF;
+  background-color: rgba(239, 238, 237, 0.4);
+}
+.historydiv {
+  width: 48%;
+  float: right;
+  margin: 80px 40px 0 0;
+  padding: 20px;
+  height: 514px;
+}
+input {
+  width: 80%;
+  margin: 30px 0;
+  border: 1px solid #FBB450;
+  padding: 6px 16px;
+}
+
+#click {
+  background-color: #FFCA9E;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  outline: none;
+  padding: 6px 16px;
+  text-align: center;
+}
+#click:HOVER {background-color: #F98C32;}
+#out {
+  width: 120px;
+  margin: 30px 150px;
+  border: 0;
+  background-color: rgba(164, 169, 173, 0);
+  padding: 15px;
+  font-size: -webkit-xxx-large;
+  text-align: center;
+}
+#area {
+  width: 100%;
+  border-collapse: collapse;
+}
+#area tr,#area td,th {
+  padding: 4px;
+  border: 1px solid #DCD4D4;
+}
+#area th {text-align: left;height: 20px;}
+#area th:nth-child(1) {width: 60%;}
+#area th:nth-child(2) {width: 30%;}
+#area th:nth-child(3) {width: 10%;}
+#area tr:nth-child(1) {background-color: #F7F78F;}
+.areadiv {
+  overflow-y: scroll;
+  height: 100%;
+  border-bottom: 1px solid #F1C2AB;
+}
+</style>
+</head>
+<body>
+<div class="leftdiv">
+  <div class="inputdiv">
+    <label>regex:</label>
+    <input type="text" id="reg" name="reg">
+    <label>value:</label>
+    <input type="text" id="input" name="input">
+
+	  <div id="click">click me for a test</div>
+  </div>
+  <div class="outputdiv">
+    <input type="text" id="out" readonly="readonly">
+  </div>
+</div>
+<div class="historydiv">
+	<div class="areadiv" id="areadiv">
+	  <table id="area">
+	    <tr>
+	      <th>regex</th>
+	      <th>value</th>
+	      <th>flag</th>
+	    </tr>
+	  </table>
+	  <div style="height: 100px;"></div>
+  </div>
+</div>
+
+<script>
+var a = new RegExp();
+var btn = document.getElementById("click"),
+    out = document.getElementById("out"),
+    val = document.getElementById("input"),
+    regex = document.getElementById("reg"),
+    area = document.getElementById("area"),
+    areadiv = document.getElementById("areadiv"),
+    value,
+    reg;
+
+btn.addEventListener("click", function(){
+	value = document.getElementById("input").value;
+	if(regex.value && value){
+		reg = new RegExp(regex.value);
+	  out.value = reg.test(value);
+	  area.lastChild.innerHTML += "<tr><td>"+regex.value+"</td><td>"+value+"</td><td>"+out.value+"</td></tr>";
+	  areadiv.scrollTop = areadiv.scrollHeight;
+	  var t = area.getElementsByTagName("tr");
+	  var len =t.length;
+	  for(var i=0;i<len-1;i++){
+		  t[i].style.backgroundColor=(t[i].sectionRowIndex%2==0)?"#fff":"#F3F3F3";
+		  t[0].style.backgroundColor = "#F7F78F";
+		  t[len-1].style.backgroundColor = "#FDE3E3";
+	  }
+	}else{
+		alert("请添加条件");
+	}
+});
+
+val.addEventListener("click", function(){
+	out.value = "";
+});
+regex.addEventListener("click", function(){
+	out.value = "";
+});
+</script>
+</body>
+</html>
